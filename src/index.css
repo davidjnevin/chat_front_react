@@ -1,13 +1,120 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+	--color-light: white;
+	--color-dark: #212121;
+	--color-signal: #fab700;
+
+	--color-background: var(--color-light);
+	--color-text: var(--color-dark);
+	--color-accent: var(--color-signal);
+
+	--size-bezel: .5rem;
+	--size-radius: 4px;
+	--transition_move: calc(1rem + .4vw);
+	line-height: 1.8;
+
+
+	font-family: 'Inter', sans-serif;
+	font-size: calc(.8rem + .4vw);
+	color: var(--color-text);
+	background: var(--color-background);
+	font-weight: 300;
+	padding: 0 calc(var(--size-bezel) * 3);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+	width: 100%;
+	margin: 0 auto;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 900;
+}
+
+mark {
+	background: var(--color-accent);
+	color: var(--color-text);
+	font-weight: bold;
+	padding: 0 0.2em;
+}
+
+.card {
+	background: var(--color-background);
+	padding: calc(4 * var(--size-bezel));
+	margin-top: calc(4 * var(--size-bezel));
+	border-radius: var(--size-radius);
+	border: 3px solid var(--color-shadow, currentColor);
+	box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);
+
+	*:first-child {
+		margin-top: 0;
+	}
+}
+
+
+.l-design-width {
+	max-width: 40rem;
+	padding: 1rem;
+}
+
+.input-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-top: calc(var(--size-bezel) * 2);
+	padding: 0, 1rem, 0, 1rem;
+}
+
+.input-container label {
+	position: absolute;
+	pointer-events: none;
+	transform: translate(0, 1px) scale(1);
+	transform-origin: top left;
+	transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+	color: #6f81a5;
+	font-size: calc(.8rem + .4vw);
+	line-height: 1rem;
+	left: 16px;
+}
+
+.input-container:focus-within label {
+	transform: translate(0, calc(var(--transition_move) * -1)) scale(0.8);
+	color: var(--color-text);
+}
+
+
+.button-group {
+	margin-top: calc(var(--size-bezel) * 2.5);
+}
+
+button {
+	color: currentColor;
+	padding: var(--size-bezel) calc(var(--size-bezel) * 2);
+	background: var(--color-accent);
+	border: none;
+	border-radius: var(--size-radius);
+	font-weight: 900;
+
+	&[type=reset] {
+		background: var(--color-background);
+		font-weight: 200;
+	}
+}
+
+button+button {
+	margin-left: calc(var(--size-bezel) * 2);
+}
+
+.icon {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	margin-right: .5em;
+}
+
+.hidden {
+	display: none;
 }
