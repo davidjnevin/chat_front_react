@@ -1,10 +1,13 @@
 import * as yup from 'yup';
 import { Formik, Form, Field, } from 'formik';
 
+
+const maxChatLength = 1000;
+
 const ChatSchema = yup.object({
 	chatInputValue: yup.string()
 		.defined()
-		.max(10, 'The maximum number of characters is 10 for this demo')
+		.max(maxChatLength, 'The maximum number of characters is {maxChatLength} for this demo')
 		.required('This field is required'),
 });
 
