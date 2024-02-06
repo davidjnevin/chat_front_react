@@ -1,58 +1,48 @@
-import React, { useState } from "react";
-import { nanoid } from 'nanoid';
+import * as yup from 'yup';
+import { Formik, Form, Field, } from 'formik';
 
-const ChatInputForm = () => {
-	const formId = nanoid();
-	const [chatValue, setChatValue] = useState('');
-	const chatInputTextAreaId = nanoid();
-	const [characterLimit] = useState(2000);
+const ChatSchema = yup.object({
+	chatInputValue: yup.string()
+		.defined()
+		.max(10, 'The maximum number of characters is 10 for this demo')
+		.required('This field is required'),
+});
 
-	const handleFormSubmission = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		alert("Form submitted!");
-	};
+interface ChatInputValues extends yup.InferType<typeof ChatSchema> {
+	chatInputValue: string;
+}
 
-	const handleFormReset = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		setChatValue('');
-	};
-
-	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-		setChatValue(e.target.value);
-	};
-
+export const ChatInputForm: React.FC<{}> = () => {
+	const initialValues: ChatInputValues = { chatInputValue: '' };
 	return (
-
 		<div className="card">
-			<form
-				onSubmit={handleFormSubmission}
-				onReset={handleFormReset}
-				id={formId}
+			<Formik
+				initialValues={initialValues}
+				validationSchema={ChatSchema}
+				onSubmit={(values, actions) => {
+					console.log({ values, actions });
+					alert(JSON.stringify(values, null, 2));
+				}}
+				onReset={(values, actions) => {
+					console.log({ values, actions });
+				}}
 			>
-				<div className="input-container">
-					<textarea
-						id={chatInputTextAreaId}
-						name="chat_input"
-						placeholder=""
-						value={chatValue}
-						onChange={handleChange}
-						rows={20}
-						cols={40}
-						minLength={1}
-						maxLength={characterLimit}
-					/>
-					<label className={chatValue && 'filled'} htmlFor={chatInputTextAreaId}>Paste your chat here</label>
-				</div>
-
-				<button id={nanoid()} disabled={false} type="submit">
-					Submit
-				</button>
-				<button id={nanoid()} disabled={false} type="reset">
-					Reset
-				</button>
-			</form>
+				{({ errors, touched }) => (
+					<Form>
+						<div className="input-container">
+							<label htmlFor="chatInputText">Paste your chat here</label>
+							<Field id="chatInputText" name="chatInputValue" placeholder="" as="textarea" rows={20} cols={40} />
+							{errors.chatInputValue && touched.chatInputValue ? (
+								<div className="input-error">{errors.chatInputValue}</div>
+							) : null}
+							<div className="button-group">
+								<button type="submit">Submit</button>
+								<button type="reset">Reset</button>
+							</div>
+						</div>
+					</Form>
+				)}
+			</Formik>
 		</div>
-	)
+	);
 };
-
-export default ChatInputForm;
