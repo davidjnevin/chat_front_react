@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import ChatInputTextArea from '../../components/ChatInputTextArea';
+import { ChatInputForm } from '../../components/ChatInputForm';
 
-test('ChatInputTextArea renders correctly', () => {
-render(<ChatInputTextArea />);
+test('ChatInputForm renders correctly', () => {
+render(<ChatInputForm />);
 const chatInput = screen.getByLabelText('Paste your chat here');
 expect(chatInput).toBeInTheDocument();
 });

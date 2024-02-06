@@ -24,7 +24,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --detectOpenHandles --forceExit",
+  	"test": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/'",
+  	"test-no-stack": "react-scripts test --transformIgnorePatterns 'node_modules/(?!axios)/' --noStackTrace --silent",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

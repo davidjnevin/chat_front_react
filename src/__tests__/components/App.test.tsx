@@ -13,16 +13,13 @@ test('renders description', () => {
 	expect(descriptionElement).toBeInTheDocument();
 });
 
-test('renders button', () => {
-	render(<App />);
-	const submitButtonElement = screen.getByText(/Submit/i, { selector: 'button' });
-	const resetButtonElement = screen.getByText(/Reset/i, { selector: 'button' });
-	expect(submitButtonElement).toBeInTheDocument();
-	expect(resetButtonElement).toBeInTheDocument();
-});
 
-test('renders ChatInputTextArea', () => {
+test('renders ChatInputForm', () => {
 	render(<App />);
 	const chatInput = screen.getByLabelText(/Paste your chat here/i, { selector: 'textarea' });
+	const submitButtonElement = screen.getByText(/Submit/i, { selector: 'button' });
+	const resetButtonElement = screen.getByText(/Reset/i, { selector: 'button' });
 	expect(chatInput).toBeInTheDocument();
+	expect(submitButtonElement).toBeInTheDocument();
+	expect(resetButtonElement).toBeInTheDocument();
 });
