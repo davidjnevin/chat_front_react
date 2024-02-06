@@ -47,15 +47,18 @@ const GetAllIds = () => {
 				{error ? (
 					<p>Oops there was an error: {error.message}</p>
 				) : cleanings ? (
-					<ul>
-						{cleanings.results.map((cleaning) => {
-							return (
-								<li key={nanoid()}>
-									{cleaning}
-								</li>
-							);
-						})}
-					</ul>
+					<div className="card">
+						<h1>Previous Chat IDs</h1>
+						<ul>
+							{cleanings.results.map((cleaning) => {
+								return (
+									<li key={nanoid()}>
+										{cleaning}
+									</li>
+								);
+							})}
+						</ul>
+					</div>
 				) : (
 					<p>No cleanings found</p>
 				)}
