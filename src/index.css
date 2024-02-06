@@ -8,6 +8,7 @@
 	--color-background: var(--color-light);
 	--color-text: var(--color-dark);
 	--color-accent: var(--color-signal);
+	--color-error: var(--color-dark);
 
 	--size-bezel: .5rem;
 	--size-radius: 4px;
@@ -83,6 +84,11 @@ mark {
 .input-container:focus-within label {
 	transform: translate(0, calc(var(--transition_move) * -1)) scale(0.8);
 	color: var(--color-text);
+}
+
+.input-container .input-error {
+	color: var(--color-error);
+	font-size: calc(.8rem + .4vw);
 }
 
 
