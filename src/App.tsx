@@ -11,7 +11,6 @@ function App() {
 	return (
 		<main>
 			<article className="l-design-width">
-			<GetCleaningById />
 				<Heading />
 				<Description />
 				<ChatInputForm />
