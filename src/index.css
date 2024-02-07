@@ -54,6 +54,17 @@ mark {
 		margin-top: 0;
 	}
 }
+.results_card {
+	background: var(--color-background);
+	padding: calc(4 * var(--size-bezel));
+	margin-top: calc(4 * var(--size-bezel));
+	border-radius: var(--size-radius);
+	border: 2px solid var(--color-shadow, currentColor);
+
+	*:first-child {
+		margin-top: 0;
+	}
+}
 
 
 .l-design-width {

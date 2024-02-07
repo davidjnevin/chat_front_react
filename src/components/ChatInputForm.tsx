@@ -1,10 +1,17 @@
 import * as yup from 'yup';
+import { nanoid } from 'nanoid';
 import { Formik, Form, Field, } from 'formik';
+import { useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
+import chatFetch from '../axios/custom';
+
+const url = '/clean/cleanings/'
+const maxChatLength = 6000;
 
 const ChatSchema = yup.object({
 	chatInputValue: yup.string()
 		.defined()
-		.max(10, 'The maximum number of characters is 10 for this demo')
+		.max(maxChatLength, `The maximum number of characters is ${maxChatLength} for this demo`)
 		.required('This field is required'),
 });
 
@@ -14,6 +21,37 @@ interface ChatInputValues extends yup.InferType<typeof ChatSchema> {
 
 export const ChatInputForm: React.FC<{}> = () => {
 	const initialValues: ChatInputValues = { chatInputValue: '' };
+	const [cleanChatIn, setCleanChatIn] = useState<string>('');
+	const [cleanChatOut, setCleanChatOut] = useState<string>('');
+	const [isLoading, setIsLoading] = useState(false);
+	const [error, setError] = useState<any>(null);
+
+	const fetchCleanChat = async (cleanChatIn: string) => {
+		setIsLoading(true);
+		setError(null);
+
+		try {
+			const response: AxiosResponse = await chatFetch.post(
+				url,
+				{
+					"chat_text": cleanChatIn
+				},
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			);
+			// console.log('cleanChatOut reposponse', response.data.cleaned_chat);
+			(response.data.result === "Not found")
+				? setCleanChatOut('No chat found\n')
+				: setCleanChatOut(response.data.cleaned_chat);
+		} catch (error) {
+			setError(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 	return (
 		<div className="card">
 			<Formik
@@ -21,10 +59,12 @@ export const ChatInputForm: React.FC<{}> = () => {
 				validationSchema={ChatSchema}
 				onSubmit={(values, actions) => {
 					console.log({ values, actions });
-					alert(JSON.stringify(values, null, 2));
+					setCleanChatIn(values.chatInputValue);
+					fetchCleanChat(cleanChatIn);
 				}}
 				onReset={(values, actions) => {
 					console.log({ values, actions });
+					setCleanChatOut('');
 				}}
 			>
 				{({ errors, touched }) => (
@@ -43,6 +83,11 @@ export const ChatInputForm: React.FC<{}> = () => {
 					</Form>
 				)}
 			</Formik>
+			{isLoading && <p>Loading...</p>}
+			<div className="results_card">
+				{(cleanChatOut !== '') && (cleanChatOut.split('\n').map((line) => <p key={nanoid()}>{line}</p>))
+				}
+			</div>
 		</div>
 	);
 };
