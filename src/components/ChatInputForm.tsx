@@ -1,16 +1,17 @@
 import * as yup from 'yup';
+import { nanoid } from 'nanoid';
 import { Formik, Form, Field, } from 'formik';
 import { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
+import chatFetch from '../axios/custom';
 
-
-const url = 'http://127.0.0.1:8000/clean/cleanings/'
-const maxChatLength = 1000;
+const url = '/clean/cleanings/'
+const maxChatLength = 6000;
 
 const ChatSchema = yup.object({
 	chatInputValue: yup.string()
 		.defined()
-		.max(maxChatLength, 'The maximum number of characters is {maxChatLength} for this demo')
+		.max(maxChatLength, `The maximum number of characters is ${maxChatLength} for this demo`)
 		.required('This field is required'),
 });
 
@@ -26,12 +27,11 @@ export const ChatInputForm: React.FC<{}> = () => {
 	const [error, setError] = useState<any>(null);
 
 	const fetchCleanChat = async (cleanChatIn: string) => {
-		console.log('cleanChatIn', cleanChatIn);
 		setIsLoading(true);
 		setError(null);
 
 		try {
-			const response: AxiosResponse = await axios.post(
+			const response: AxiosResponse = await chatFetch.post(
 				url,
 				{
 					"chat_text": cleanChatIn
@@ -42,10 +42,10 @@ export const ChatInputForm: React.FC<{}> = () => {
 					},
 				}
 			);
+			// console.log('cleanChatOut reposponse', response.data.cleaned_chat);
 			(response.data.result === "Not found")
 				? setCleanChatOut('No chat found\n')
-				: console.log(response);
-			// : setCleanChatOut(response.data.result.cleaned_chat);
+				: setCleanChatOut(response.data.cleaned_chat);
 		} catch (error) {
 			setError(error);
 		} finally {
@@ -64,6 +64,7 @@ export const ChatInputForm: React.FC<{}> = () => {
 				}}
 				onReset={(values, actions) => {
 					console.log({ values, actions });
+					setCleanChatOut('');
 				}}
 			>
 				{({ errors, touched }) => (
@@ -82,6 +83,11 @@ export const ChatInputForm: React.FC<{}> = () => {
 					</Form>
 				)}
 			</Formik>
+			{isLoading && <p>Loading...</p>}
+			<div className="results_card">
+				{(cleanChatOut !== '') && (cleanChatOut.split('\n').map((line) => <p key={nanoid()}>{line}</p>))
+				}
+			</div>
 		</div>
 	);
 };
