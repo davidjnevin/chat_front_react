@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const base_url: string = import.meta.env.VITE_BACKEND_BASEURL
+
 const chatFetch = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: base_url,
   headers: {
     Accept: 'application/json',
   },
