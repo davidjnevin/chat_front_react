@@ -12,7 +12,7 @@
 
 	/* Bundler mode */
 	"moduleResolution": "bundler",
-	"allowIportTsExtensions": true,
+	"allowImportingTsExtensions": true,
 	"resolveJsonModule": true,
 	"isolatedModules": true,
 	"noEmit": true,
@@ -21,8 +21,8 @@
 
 	/* Linting */
 	"strict": true,
-	"noUnusedLocals": true,
-	"noUnusesParameters": true,
+	"noUnusedLocals": false,
+	"noUnusedParameters": true,
 	"noFallthroughCasesInSwitch": true
   },
   "include": ["src"],
