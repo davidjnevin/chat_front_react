@@ -1,4 +1,4 @@
-import { useState, createRef } from 'react';
+import { useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
 import { nanoid } from 'nanoid'
 import * as yup from 'yup';
@@ -11,15 +11,6 @@ const ChatIdInputSchema = yup.object().shape({
 	requestedId: yup.string().required('Please enter a chat ID'),
 });
 
-interface GetCleaningByIdResponse {
-	result: {
-		uuid: string;
-		chat_text: string;
-		cleaned_chat: string;
-		created_at: string;
-		updated_at: string;
-	}
-}
 
 interface ChatIdInput extends yup.InferType<typeof ChatIdInputSchema> {
 	requestedId: string;
@@ -45,7 +36,7 @@ const GetCleaningById = () => {
 					},
 				},
 			);
-			(response.data.result === "Not found" )
+			(response.data.result === "Not found")
 				? setCleanChat('No chat found\n')
 				: setCleanChat(response.data.result.cleaned_chat);
 		} catch (error) {
