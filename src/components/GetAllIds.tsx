@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid'
 
 const url = 'http://127.0.0.1:8000/clean/cleanings'
 

@@ -1,6 +1,6 @@
 import { useState, createRef } from 'react';
 import axios, { AxiosResponse } from 'axios';
-import { nanoid } from 'nanoid';
+import { nanoid } from 'nanoid'
 import * as yup from 'yup';
 import { Formik, Form, Field, } from 'formik';
 
@@ -83,8 +83,8 @@ const GetCleaningById = () => {
 										<div className="input-error">{errors.requestedId}</div>
 									) : null}
 									<div className="button-group">
-										<button type="submit">Submit</button>
-										<button type="reset">Reset</button>
+										<button type="submit">Fetch</button>
+										<button type="reset">Cancel</button>
 									</div>
 								</div>
 							</Form>
