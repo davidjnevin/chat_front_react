@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { nanoid } from 'nanoid'
 import { Formik, Form, Field, } from 'formik';
 import { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import chatFetch from '../axios/custom';
 
 const url = '/clean/cleanings/'
