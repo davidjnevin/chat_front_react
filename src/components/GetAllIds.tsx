@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { nanoid } from 'nanoid'
+import chatFetch from '../axios/custom';
 
-const url = 'http://127.0.0.1:8000/clean/cleanings'
+const url = '/clean/cleanings/'
 
 const GetAllIds = () => {
 
@@ -19,7 +20,7 @@ const GetAllIds = () => {
 		setError(null);
 
 		try {
-			const response: AxiosResponse = await axios.get(
+			const response: AxiosResponse = await chatFetch.get(
 				url,
 				{
 					headers: {
