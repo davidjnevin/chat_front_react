@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { nanoid } from 'nanoid'
 import * as yup from 'yup';
 import { Formik, Form, Field, } from 'formik';
+import chatFetch from '../axios/custom';
 
-const url = 'http://127.0.0.1:8000/clean/cleanings/'
+const url = '/clean/cleanings/'
 
 
 const ChatIdInputSchema = yup.object().shape({
@@ -28,7 +29,7 @@ const GetCleaningById = () => {
 		setError(null);
 
 		try {
-			const response: AxiosResponse = await axios.get(
+			const response: AxiosResponse = await chatFetch.get(
 				url + requestedId,
 				{
 					headers: {
